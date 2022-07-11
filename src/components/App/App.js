@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Route, Routes, HashRouter as Router } from 'react-router-dom'
 
 import Navigation from '../Navigation/Navigation'
 import Home from '../Home/Home'
@@ -10,46 +10,39 @@ import AllData from '../AllData/AllData'
 import CreateAccount from '../CreateAccount/CreateAccount'
 import { UserContext } from '../../context/context'
 
-const USERS = {
-    users: [
-        {
-            name: 'Nick',
-            email: 'nick@gmail.com',
-            password: 'secret',
-            balance: 500
-        },
-        {
-            name: 'Joe',
-            email: 'joe@gmail.com',
-            password: 'secret',
-            balance: 200
-        },
-        {
-            name: 'Carly',
-            email: 'carly@gmail.com',
-            password: 'secret',
-            balance: 100
-        }
-    ]
-}
+import './App.css'
+
 
 const App = () => {
-    const [users, setUsers] = useState(USERS)
+    // const [users, setUsers] = useState(USERS)
+    const [context, setContext] = useState({
+        name: '', email: '', password: '', balance: 0
+    })
+
+    const updateBalance = (balance) => {
+        const new_context = { ...context, balance }
+        setContext(new_context);
+    }
+
+    const updateUser = (user) => {
+        setContext(user);
+    }
 
     return (
         <div className="app-container">
             <Navigation />
             <div className="content-container">
-                <UserContext.Provider value={users}>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/create/" element={<CreateAccount />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/deposit" element={<Deposit />} />
-                        <Route path="/withdraw" element={<Withdraw />} />
-                        <Route path="/all" element={<AllData />} />
-                    </Routes>
-                </UserContext.Provider>
+                <Router>
+                    <UserContext.Provider value={context}>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/create/" element={<CreateAccount updateUser={updateUser} />} />
+                            <Route path="/deposit" element={<Deposit updateBalance={updateBalance} />} />
+                            <Route path="/withdraw" element={<Withdraw updateBalance={updateBalance} />} />
+                            <Route path="/all" element={<AllData />} />
+                        </Routes>
+                    </UserContext.Provider>
+                </Router>
             </div>
         </div >
     )

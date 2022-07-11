@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { UserContext, Card } from '../../context/context'
+import { Link } from 'react-router-dom'
 
-const CreateAccount = () => {
+const CreateAccount = ({ updateUser }) => {
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState('');
     const [name, setName] = useState('');
@@ -10,15 +11,17 @@ const CreateAccount = () => {
     const ctx = useContext(UserContext)
 
     const handleCreate = () => {
-        console.log(name, email, password)
         if (!validate(name, 'name')) return
         if (!validate(password, 'password')) return
         if (!validate(show, 'show')) return
-        ctx.users.push({ name, email, password, balance: 100 })
+        const user = { name, email, password, balance: 100 }
+        updateUser(user)
         setShow(false);
     }
 
     const clearForm = () => {
+        const user = { name: "", email: "", password: "", balance: 0 }
+        updateUser(user);
         setName('')
         setEmail('')
         setPassword('')
@@ -33,6 +36,14 @@ const CreateAccount = () => {
         }
         return true
     }
+
+
+    useEffect(() => {
+        const btn = document.getElementById('createButton')
+        const condition_disable = name && email && password
+        if (condition_disable) btn.removeAttribute('disabled', '')
+        else btn.setAttribute('disabled', '')
+    }, [name, email, password])
 
     return (
         <Card
@@ -55,15 +66,16 @@ const CreateAccount = () => {
                         placeholder="Enter password" value={password}
                         onChange={e => setPassword(e.currentTarget.value)} /><br />
 
-                    <button type="submit" className="btn btn-light" onClick={handleCreate}>
+                    <button id="createButton" type="submit" className="btn btn-light" onClick={handleCreate}>
                         CreateAccount
                     </button>
                 </>
             ) : (
                 <>
                     <h5>Success</h5>
-                    <button type="submit" className="btn btn-light"
-                        onClick={clearForm}>Add another account</button>
+                    <Link to="/deposit">Make a deposit</Link><br />
+                    <Link to="/deposit">Make a Withdrawal</Link><br />
+                    <Link to="#" onClick={clearForm}>Create new account</Link><br />
                 </>
             )}
         />

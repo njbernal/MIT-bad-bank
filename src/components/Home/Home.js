@@ -3,15 +3,17 @@ import { UserContext, Card } from '../../context/context'
 
 const Home = () => {
     const ctx = useContext(UserContext)
+
+    const body = () => {
+        if (ctx.name) return (<>Hello {ctx.name}</>)
+        else return "Please create an account to begin."
+    }
     return (
         <Card
             txtcolor="black"
-            header="Bad Bank Home"
-            title="Welcome to Bad Bank"
-            text="You can use this bank"
-            body={
-                (<img src="bank.png" className="img-fluid" alt="Responsive Image" />)
-            }
+            header="Bad Bank"
+            title={body()}
+            body="Welcome to the bank."
         />
     )
 }
