@@ -1,8 +1,7 @@
-import './App.css'
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import Nav from '../Nav/Nav'
+import Navigation from '../Navigation/Navigation'
 import Home from '../Home/Home'
 import Deposit from '../Deposit/Deposit'
 import Login from '../Login/Login'
@@ -36,9 +35,10 @@ const USERS = {
 
 const App = () => {
     const [users, setUsers] = useState(USERS)
+
     return (
         <div className="app-container">
-            <Nav />
+            <Navigation />
             <div className="content-container">
                 <UserContext.Provider value={users}>
                     <Routes>

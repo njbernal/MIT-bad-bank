@@ -1,0 +1,9 @@
+.nav-container {
+    background: black;
+    color: white;
+    padding: 20px;
+}
+
+.nav-container a {
+    color: white;
+}
