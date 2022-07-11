@@ -61,7 +61,7 @@ const Withdraw = ({ updateBalance }) => {
                         ) : (
                             <>
                                 <h5>Success</h5>
-                                <div>New balance: {ctx.balance}</div>
+                                <div>New balance: ${ctx.balance}</div>
                                 <button type="submit" className="btn btn-light"
                                     onClick={clearForm}>Another withdrawal</button>
                             </>
