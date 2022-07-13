@@ -4,7 +4,6 @@ import { Route, Routes, HashRouter as Router } from 'react-router-dom'
 import Navigation from '../Navigation/Navigation'
 import Home from '../Home/Home'
 import Deposit from '../Deposit/Deposit'
-import Login from '../Login/Login'
 import Withdraw from '../Withdraw/Withdraw'
 import AllData from '../AllData/AllData'
 import CreateAccount from '../CreateAccount/CreateAccount'
@@ -16,11 +15,15 @@ import './App.css'
 const App = () => {
     // const [users, setUsers] = useState(USERS)
     const [context, setContext] = useState({
-        name: '', email: '', password: '', balance: 0
+        name: '', email: '', password: '', balance: 0, transactions: []
     })
+    const [history, setHistory] = useState([])
 
-    const updateBalance = (balance) => {
-        const new_context = { ...context, balance }
+    const updateBalance = (balance, transaction, amount) => {
+        const transactions = context.transactions
+        transactions.push({ transaction, amount })
+        console.log(transactions)
+        const new_context = { ...context, balance, transactions }
         setContext(new_context);
     }
 
@@ -36,7 +39,7 @@ const App = () => {
                     <UserContext.Provider value={context}>
                         <Routes>
                             <Route path="/" element={<Home />} />
-                            <Route path="/create/" element={<CreateAccount updateUser={updateUser} />} />
+                            <Route path="/create" element={<CreateAccount updateUser={updateUser} />} />
                             <Route path="/deposit" element={<Deposit updateBalance={updateBalance} />} />
                             <Route path="/withdraw" element={<Withdraw updateBalance={updateBalance} />} />
                             <Route path="/all" element={<AllData />} />

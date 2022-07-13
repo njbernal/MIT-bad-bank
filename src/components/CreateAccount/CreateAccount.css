@@ -1,0 +1,13 @@
+.create-account-error {
+    font-size: 1em;
+    background-color: red;
+    color: white;
+    font-weight: 500;
+    border-radius: 3px;
+    transition: all 300ms ease;
+    text-align: center;
+}
+
+#start_form {
+    margin-top: 10px;
+}

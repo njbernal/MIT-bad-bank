@@ -13,7 +13,14 @@ const Home = () => {
             txtcolor="black"
             header="Bad Bank"
             title={body()}
-            body="Welcome to the bank."
+            body={(
+                <>
+                    <img src='images/dollars.png' alt='Bundle of dollar bills from freepngimg.com' />
+                    <hr />
+                    <p>Welcome to the Bad Bank</p>
+                </>
+            )
+            }
         />
     )
 }

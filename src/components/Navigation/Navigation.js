@@ -1,8 +1,7 @@
 import { Navbar, Nav, Container } from 'react-bootstrap'
 import './Nav.css'
 
-const Navigation = ({ handleNav }) => {
-    // TODO: Add hover effect to link
+const Navigation = ({ handleNav, status }) => {
 
     return (
         <div className="nav-container">

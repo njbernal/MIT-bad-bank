@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { UserContext, Card } from '../../context/context'
 import { Link } from 'react-router-dom'
 
@@ -6,22 +6,23 @@ import { Link } from 'react-router-dom'
 const Deposit = ({ updateBalance }) => {
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState('');
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState('');
     const ctx = useContext(UserContext)
 
     const handleDeposit = (e) => {
-        e.preventDefault()
+        e.preventDefault('')
         if (amount <= 0) {
-            setStatus('Error: Please enter a positive number')
-            return
+            setStatus('Error: Please enter a positive number.')
+            setTimeout(() => setStatus(''), 3000);
+            return;
         }
         const new_balance = parseInt(amount) + parseInt(ctx.balance)
-        updateBalance(new_balance)
+        updateBalance(new_balance, "Deposit", amount)
         setShow(false);
     }
 
     const clearForm = () => {
-        setAmount(0)
+        setAmount('')
         setShow(true)
     }
 
@@ -34,23 +35,33 @@ const Deposit = ({ updateBalance }) => {
         return true
     }
 
+    useEffect(() => {
+        if (ctx.name) {
+            const btn = document.getElementById('submitButton')
+            const condition_disable = amount
+            if (condition_disable) btn.removeAttribute('disabled', '')
+            else btn.setAttribute('disabled', '')
+        }
+    }, [amount])
+
     return (
         <div className="depositContainer">
             {ctx.name ? (
                 <Card
                     header="Deposit"
-                    status={status}
                     body={show ? (
                         <>
-                            Name: {ctx.name}<br />
-                            Balance: ${ctx.balance} <br /><br />
+                            <div className="create-account-error" id="error">{status}</div>
+                            <div><span>Name:</span> <strong>{ctx.name}</strong></div>
+                            <div><span>Balance:</span> <strong>${ctx.balance}</strong></div>
+                            <hr />
 
-                            Amount<br />
-                            <input type="input" className="form-control" id="amount"
+                            <label htmlFor="amount">Deposit Amount: </label>
+                            <input type="number" className="form-control" id="amount"
                                 placeholder="Deposit amount" value={amount}
                                 onChange={e => setAmount(e.currentTarget.value)} /><br />
 
-                            <button type="submit" className="btn btn-light" onClick={handleDeposit}>
+                            <button type="submit" id="submitButton" className="btn btn-light" onClick={handleDeposit}>
                                 Deposit
                             </button>
                         </>
@@ -58,10 +69,12 @@ const Deposit = ({ updateBalance }) => {
                         <>
                             <h5>Success</h5>
                             <div>New balance: ${ctx.balance}</div>
+                            <hr />
                             <button type="submit" className="btn btn-light"
                                 onClick={clearForm}>Another deposit</button>
                         </>
-                    )}
+                    )
+                    }
                 />
             ) : (
                 <Card
@@ -69,7 +82,7 @@ const Deposit = ({ updateBalance }) => {
                     status={status}
                     body={<><Link to="/create">Create an account</Link></>} />
             )}
-        </div>
+        </div >
     )
 }
 
