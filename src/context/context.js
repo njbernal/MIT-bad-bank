@@ -10,7 +10,7 @@ export const Card = (props) => {
     }
 
     return (
-        <div className={classes()} style={{ maxWidth: "50rem" }} >
+        <div className={classes()} style={{ minWidth: "350px", maxWidth: "50rem" }} >
             <div className="card-header">{props.header}</div>
             <div className="card-body">
                 {props.title && (<h5 className="card-title">{props.title}</h5>)}
