@@ -10,10 +10,8 @@ import CreateAccount from '../CreateAccount/CreateAccount'
 import { UserContext } from '../../context/context'
 
 import './App.css'
-import { useLocation } from "react-router-dom";
 
 const App = () => {
-    const location = useLocation();
     // const [users, setUsers] = useState(USERS)
     const [context, setContext] = useState({
         name: '', email: '', password: '', balance: 0, transactions: []
@@ -23,7 +21,6 @@ const App = () => {
     const updateBalance = (balance, transaction, amount) => {
         const transactions = context.transactions
         transactions.push({ transaction, amount })
-        console.log(transactions)
         const new_context = { ...context, balance, transactions }
         setContext(new_context);
     }
@@ -33,20 +30,20 @@ const App = () => {
     }
 
     return (
-        <div className="app-container">
-            <Navigation />
-            <div className="content-container">
-                <UserContext.Provider value={context}>
+        <UserContext.Provider value={context}>
+            <div className="app-container">
+                <Navigation />
+                <div className="content-container">
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/home" element={<Home />} />
                         <Route path="/create" element={<CreateAccount updateUser={updateUser} />} />
                         <Route path="/deposit" element={<Deposit updateBalance={updateBalance} />} />
                         <Route path="/withdraw" element={<Withdraw updateBalance={updateBalance} />} />
                         <Route path="/all" element={<AllData />} />
                     </Routes>
-                </UserContext.Provider>
-            </div>
-        </div >
+                </div>
+            </div >
+        </UserContext.Provider>
     )
 }
 

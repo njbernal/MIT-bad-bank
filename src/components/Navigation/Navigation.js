@@ -1,16 +1,28 @@
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { Navbar, Nav, Container, } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import './Nav.css'
 
 const Navigation = ({ handleNav, status }) => {
+    const [active, setActive] = useState('home');
+    const location = useLocation();
+
+    useEffect(() => {
+        console.log(location.pathname)
+        setActive(location.pathname.split('/')[1])
+    }, [location.pathname]);
 
     return (
         <div className="nav-container">
-            <Nav variant="pills" defaultActiveKey="home" className="me-auto">
-                <Nav.Link id="/" eventKey="home" href="#/">Home</Nav.Link>
-                <Nav.Link id="/create" eventKey="create" href="#/create">Create Account</Nav.Link>
-                <Nav.Link id="/deposit" eventKey="deposit" href="#/deposit">Deposit</Nav.Link>
-                <Nav.Link id="/withdraw" eventKey="withdraw" href="#/withdraw">Withdraw</Nav.Link>
-                <Nav.Link id="/all" eventKey="all" href="#/all">All</Nav.Link>
+            <Nav variant="pills" defaultActiveKey="home" className="me-auto sub-nav"
+                activeKey={active}
+                onSelect={(selectedKey) => setActive(selectedKey)}>
+                <Nav.Link as={Link} eventKey="home" to="/home">Home</Nav.Link>
+                <Nav.Link as={Link} eventKey="create" to="/create">Create</Nav.Link>
+                <Nav.Link as={Link} eventKey="deposit" to="/deposit">Deposit</Nav.Link>
+                <Nav.Link as={Link} eventKey="withdraw" to="/withdraw">Withdraw</Nav.Link>
+                <Nav.Link as={Link} eventKey="all" to="/all">All</Nav.Link>
             </Nav >
         </div>
     )
