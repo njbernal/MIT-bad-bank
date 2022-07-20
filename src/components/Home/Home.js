@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { UserContext, Card } from '../../context/context'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
     const ctx = useContext(UserContext)
@@ -18,6 +19,7 @@ const Home = () => {
                     <img src='images/dollars.png' alt='Bundle of dollar bills from freepngimg.com' />
                     <hr />
                     <p>Welcome to the Bad Bank</p>
+                    <Link as={Link} eventKey="create" to="/create">Create an account.</Link>
                 </>
             )
             }

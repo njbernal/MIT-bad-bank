@@ -35,7 +35,7 @@ const App = () => {
                 <Navigation />
                 <div className="content-container">
                     <Routes>
-                        <Route path="/home" element={<Home />} />
+                        <Route path="/" element={<Home />} />
                         <Route path="/create" element={<CreateAccount updateUser={updateUser} />} />
                         <Route path="/deposit" element={<Deposit updateBalance={updateBalance} />} />
                         <Route path="/withdraw" element={<Withdraw updateBalance={updateBalance} />} />

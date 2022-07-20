@@ -9,7 +9,6 @@ const Navigation = ({ handleNav, status }) => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log(location.pathname)
         setActive(location.pathname.split('/')[1])
     }, [location.pathname]);
 
@@ -18,7 +17,7 @@ const Navigation = ({ handleNav, status }) => {
             <Nav variant="pills" defaultActiveKey="home" className="me-auto sub-nav"
                 activeKey={active}
                 onSelect={(selectedKey) => setActive(selectedKey)}>
-                <Nav.Link as={Link} eventKey="home" to="/home">Home</Nav.Link>
+                <Nav.Link as={Link} eventKey="home" to="/">Home</Nav.Link>
                 <Nav.Link as={Link} eventKey="create" to="/create">Create</Nav.Link>
                 <Nav.Link as={Link} eventKey="deposit" to="/deposit">Deposit</Nav.Link>
                 <Nav.Link as={Link} eventKey="withdraw" to="/withdraw">Withdraw</Nav.Link>
